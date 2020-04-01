@@ -3,4 +3,8 @@ Rails.application.routes.draw do
   scope :api, as: :api, module: :api do
     resources :data_reports, only: :create
   end
+
+  resources :devices, only: [:show, :index] do
+    resource :sensor_readings, only: :show
+  end
 end

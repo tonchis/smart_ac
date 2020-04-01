@@ -1,3 +1,5 @@
+require 'test_helper'
+
 class DataReportWorkerTest < ActiveSupport::TestCase
   test "it initializes" do
     worker = DataReportWorker.new

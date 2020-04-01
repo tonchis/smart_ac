@@ -7,9 +7,9 @@
 #   Character.create(name: 'Luke', movie: movies.first)
 
 device_configs = [
-  {serial_number: "FAKE1231", sensors: 2},
-  {serial_number: "FAKE1232", sensors: 2},
-  {serial_number: "FAKE1233", sensors: 2}
+  {serial_number: "FAKE-123-01", sensors: 2},
+  {serial_number: "FAKE-123-02", sensors: 2},
+  {serial_number: "FAKE-123-03", sensors: 2}
 ]
 
 Device.transaction do 

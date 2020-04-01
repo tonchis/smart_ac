@@ -23,12 +23,12 @@ to async.
 
 ### Structure
   * sensor_number - **(String - Unique per Device)** An identifier for each sensor. __Required__
-  * recorded_at - **(Time)**  The time the reading was taken __Requred__
-  * humidity - **(Integer)** % Humidity __Requred__
-  * temperature - **(Decimal)** Temperature in C __Requred__
-  * carbon_monoxide - **(Integer)** CO parts per million __Requred__
+  * recorded_at - **(Time)**  The time the reading was taken __Required__
+  * humidity - **(Integer)** % Humidity __Required__
+  * temperature - **(Decimal)** Temperature in C __Required__
+  * carbon_monoxide - **(Integer)** CO parts per million __Required__
   * device - 
-    * serial_number - **(String - Unique)** __Requred__
+    * serial_number - **(String - Unique)** __Required__
     * registration_date - **(Date)** The date the device is registered __Optional__
     * firmware_version - **(String)** Firmware version on device __Optional__
 

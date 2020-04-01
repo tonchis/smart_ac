@@ -14,4 +14,12 @@ module DevicesHelper
       ""
     end
   end
+
+  def color_for_alerts(collection)
+    if collection.length > 0
+      "red"
+    else
+      "green"
+    end
+  end
 end

@@ -1,5 +1,5 @@
 class DevicesController < ApplicationController
-  helper_method :devices, :device, :chart_end_time
+  helper_method :devices, :device, :chart_end_time, :active_device_alerts
 
   def index
   end
@@ -15,6 +15,10 @@ class DevicesController < ApplicationController
 
   def devices
     @devices ||= Device.order(created_at: :desc).all
+  end
+
+  def active_device_alerts
+    device.alerts.active
   end
 
   def chart_end_time

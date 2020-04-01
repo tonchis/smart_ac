@@ -10,10 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_01_030100) do
+ActiveRecord::Schema.define(version: 2020_04_01_150837) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "alerts", force: :cascade do |t|
+    t.bigint "sensor_id", null: false
+    t.boolean "active"
+    t.boolean "carbon_monoxide_high"
+    t.boolean "needs_service"
+    t.boolean "needs_new_filter"
+    t.boolean "gas_leak"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["sensor_id"], name: "index_alerts_on_sensor_id", unique: true
+  end
 
   create_table "data_reports", force: :cascade do |t|
     t.text "data"
@@ -60,6 +72,7 @@ ActiveRecord::Schema.define(version: 2020_04_01_030100) do
     t.index ["email"], name: "index_users_on_email", unique: true
   end
 
+  add_foreign_key "alerts", "sensors"
   add_foreign_key "readings", "sensors"
   add_foreign_key "sensors", "devices"
 end

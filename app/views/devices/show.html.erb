@@ -1,5 +1,4 @@
 <div>
-
   <div class="row my-2 px-2">
     <div class="col-md-12 dashboard_graph">
       <div class="row">
@@ -36,7 +35,7 @@
           </div>
           <div class="col-md-2 col-sm-4  tile_stats_count">
             <span class="count_top"><i class="fa fa-bell"></i> Alerts</span>
-            <div class="count green">0</div>
+            <div class="count <%= color_for_alerts(active_device_alerts) %>"><%= active_device_alerts.length %></div>
           </div>
           <div class="col-md-2 col-sm-4  tile_stats_count">
             <span class="count_top"><i class="fa fa-microchip"></i> Firmware</span>

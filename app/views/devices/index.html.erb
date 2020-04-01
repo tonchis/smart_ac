@@ -1,18 +1,36 @@
-<div>
-  <table>
-    <tr>
-      <th>Serial Number</th>
-      <th>Registration Date</th>
-      <th>Firmware Version</th>
-      <th>Added On</th>
-    </tr>
-    <% devices.each do |device| %>
-      <tr>
-        <td><%= link_to device.serial_number, device %></td>
-        <td><%= device.registration_date %></td>
-        <td><%= device.firmware_version %></td>
-        <td><%= device.created_at %></td>
-      </tr>
-    <% end %>
-  </table>
+<div class="row">
+  <div class="col-md-12 col-sm-12">
+    <div class="dashboard_graph">
+      <div class="row x-title">
+        <div class="col-md-12">
+          <h3 style="text-align: center;">Reporting Devices</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Serial Number</th>
+                <th>Registration Date</th>
+                <th>Firmware Version</th>
+                <th>Added On</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% devices.each do |device| %>
+                <tr>
+                  <td><%= link_to device.serial_number, device %></td>
+                  <td><%= device.registration_date %></td>
+                  <td><%= device.firmware_version %></td>
+                  <td><%= device.created_at %></td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>

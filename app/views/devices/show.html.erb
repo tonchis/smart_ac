@@ -1,36 +1,93 @@
 <div>
-  <div>
-    <div><%= device.serial_number %></div>
-    <div><%= device.registration_date %></div>
-    <div><%= device.firmware_version %></div>
-    <div><%= device.sensors.count %></div>
-    <div><%= device.readings.count %></div>
+
+  <div class="row my-2 px-2">
+    <div class="col-md-12 dashboard_graph">
+      <div class="row">
+        <div class="col-md-12">
+          <h3 class="text-center">
+            <span class="count_top"><i class="fa fa-server"></i></span>
+            <%= device.serial_number %>
+            <div>
+              <small class="text-muted">Device Details</small>
+            </div>
+          </h3>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row my-2 px-2">
+    <div class="col-md-12 dashboard_graph">
+      <div class="row">
+        <div class="col-md-12">
+          <h5 class="text-muted text-right">
+            Statistics
+          </h5>
+        </div>
+      </div>
+      <div class="row">
+        <div class="tile_count" style="width: 100%;">
+          <div class="col-md-2 col-sm-4  tile_stats_count">
+            <span class="count_top"><i class="fa fa-video"></i> Total Sensors</span>
+            <div class="count"><%= device.sensors.count %></div>
+          </div>
+          <div class="col-md-2 col-sm-4  tile_stats_count">
+            <span class="count_top"><i class="fa fa-table"></i> Total Readings</span>
+            <div class="count"><%= device.readings.count %></div>
+          </div>
+          <div class="col-md-2 col-sm-4  tile_stats_count">
+            <span class="count_top"><i class="fa fa-bell"></i> Alerts</span>
+            <div class="count green">0</div>
+          </div>
+          <div class="col-md-2 col-sm-4  tile_stats_count">
+            <span class="count_top"><i class="fa fa-microchip"></i> Firmware</span>
+            <div class="count"><%= device.firmware_version %></div>
+          </div>
+          <div class="col-md-4 col-sm-4  tile_stats_count">
+            <span class="count_top"><i class="fa fa-history"></i> Registration Date</span>
+            <div class="count"><%= dashboard_date(device.registration_date) %></div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
-  <div>
-    <% chart_options = {"min":22, "max":32, "xtitle":"Time", "ytitle": "Temperature (C°)"} %>
-    <%= line_chart device_sensor_readings_path(device, attribute: :temperature, end_time: chart_end_time, range: 1.day.to_i), **chart_options %>
+  <div class="row my-2 px-2">
+    <div class="col-md-12 dashboard_graph">
+      <% chart_options = {"min":22, "max":32, "xtitle":"Time", "ytitle": "Temperature (C°)", title: "Temperature"} %>
+      <%= line_chart device_sensor_readings_path(device, attribute: :temperature, end_time: chart_end_time, range: 1.day.to_i), **chart_options %>
+      <div class="chart-controls">
 
-    <%= link_to_change_chart "today", chart_options, @chartkick_chart_id, device_sensor_readings_path(device, attribute: :temperature, end_time: chart_end_time, range: 1.day.to_i) %>
-    <%= link_to_change_chart "this week", chart_options, @chartkick_chart_id, device_sensor_readings_path(device, attribute: :temperature, end_time: chart_end_time, range: 1.week.to_i) %>
-    <%= link_to_change_chart "this month", chart_options, @chartkick_chart_id, device_sensor_readings_path(device, attribute: :temperature, end_time: chart_end_time, range: 1.month.to_i) %>
-    <%= link_to_change_chart "this year", chart_options, @chartkick_chart_id, device_sensor_readings_path(device, attribute: :temperature, end_time: chart_end_time, range: 1.year.to_i) %>
-  </div>
-  <div>
-    <% chart_options = {xtitle: "Time", min: 25, max: 75, ytitle: "Humidity (%)"} %>
-    <%= line_chart device_sensor_readings_path(device, attribute: :humidity, end_time: chart_end_time, range: 1.day.to_i), **chart_options %>
-    <%= link_to_change_chart "today", chart_options, @chartkick_chart_id, device_sensor_readings_path(device, attribute: :humidity, end_time: chart_end_time, range: 1.day.to_i) %>
-    <%= link_to_change_chart "this week", chart_options, @chartkick_chart_id, device_sensor_readings_path(device, attribute: :humidity, end_time: chart_end_time, range: 1.week.to_i) %>
-    <%= link_to_change_chart "this month", chart_options, @chartkick_chart_id, device_sensor_readings_path(device, attribute: :humidity, end_time: chart_end_time, range: 1.month.to_i) %>
-    <%= link_to_change_chart "this year", chart_options, @chartkick_chart_id, device_sensor_readings_path(device, attribute: :humidity, end_time: chart_end_time, range: 1.year.to_i) %>
+        <%= link_to_change_chart "today", chart_options, @chartkick_chart_id, device_sensor_readings_path(device, attribute: :temperature, end_time: chart_end_time, range: 1.day.to_i), class: "btn btn-primary chart-control" %>
+        <%= link_to_change_chart "this week", chart_options, @chartkick_chart_id, device_sensor_readings_path(device, attribute: :temperature, end_time: chart_end_time, range: 1.week.to_i), class: "btn btn-primary chart-control" %>
+        <%= link_to_change_chart "this month", chart_options, @chartkick_chart_id, device_sensor_readings_path(device, attribute: :temperature, end_time: chart_end_time, range: 1.month.to_i), class: "btn btn-primary chart-control" %>
+        <%= link_to_change_chart "this year", chart_options, @chartkick_chart_id, device_sensor_readings_path(device, attribute: :temperature, end_time: chart_end_time, range: 1.year.to_i), class: "btn btn-primary chart-control" %>
+      </div>
+    </div>
   </div>
 
-  <div>
-    <% chart_options = {xtitle: "Time", min: 0, max: 12, ytitle: "CO (ppm)"} %>
-    <%= line_chart device_sensor_readings_path(device, attribute: :carbon_monoxide, end_time: chart_end_time, range: 1.day.to_i), **chart_options %>
-    <%= link_to_change_chart "today", chart_options, @chartkick_chart_id, device_sensor_readings_path(device, attribute: :carbon_monoxide, end_time: chart_end_time, range: 1.day.to_i) %>
-    <%= link_to_change_chart "this week", chart_options, @chartkick_chart_id, device_sensor_readings_path(device, attribute: :carbon_monoxide, end_time: chart_end_time, range: 1.week.to_i) %>
-    <%= link_to_change_chart "this month", chart_options, @chartkick_chart_id, device_sensor_readings_path(device, attribute: :carbon_monoxide, end_time: chart_end_time, range: 1.month.to_i) %>
-    <%= link_to_change_chart "this year", chart_options, @chartkick_chart_id, device_sensor_readings_path(device, attribute: :carbon_monoxide, end_time: chart_end_time, range: 1.year.to_i) %>
+  <div class="row my-2 px-2">
+    <div class="col-md-12 dashboard_graph">
+      <% chart_options = {xtitle: "Time", min: 25, max: 75, ytitle: "Humidity (%)", title: "Humidity"} %>
+      <%= line_chart device_sensor_readings_path(device, attribute: :humidity, end_time: chart_end_time, range: 1.day.to_i), **chart_options %>
+      <div class="chart-controls">
+      <%= link_to_change_chart "today", chart_options, @chartkick_chart_id, device_sensor_readings_path(device, attribute: :humidity, end_time: chart_end_time, range: 1.day.to_i), class: "btn btn-primary chart-control" %>
+      <%= link_to_change_chart "this week", chart_options, @chartkick_chart_id, device_sensor_readings_path(device, attribute: :humidity, end_time: chart_end_time, range: 1.week.to_i), class: "btn btn-primary chart-control" %>
+      <%= link_to_change_chart "this month", chart_options, @chartkick_chart_id, device_sensor_readings_path(device, attribute: :humidity, end_time: chart_end_time, range: 1.month.to_i), class: "btn btn-primary chart-control" %>
+      <%= link_to_change_chart "this year", chart_options, @chartkick_chart_id, device_sensor_readings_path(device, attribute: :humidity, end_time: chart_end_time, range: 1.year.to_i), class: "btn btn-primary chart-control" %>
+      </div>
+    </div>
+  </div>
+
+  <div class="row my-2 px-2">
+    <div class="col-md-12 dashboard_graph">
+      <% chart_options = {xtitle: "Time", min: 0, max: 12, ytitle: "CO (ppm)", title: "Carbon Monoxide"} %>
+      <%= line_chart device_sensor_readings_path(device, attribute: :carbon_monoxide, end_time: chart_end_time, range: 1.day.to_i), **chart_options %>
+      <div class="chart-controls">
+      <%= link_to_change_chart "today", chart_options, @chartkick_chart_id, device_sensor_readings_path(device, attribute: :carbon_monoxide, end_time: chart_end_time, range: 1.day.to_i), class: "btn btn-primary chart-control" %>
+      <%= link_to_change_chart "this week", chart_options, @chartkick_chart_id, device_sensor_readings_path(device, attribute: :carbon_monoxide, end_time: chart_end_time, range: 1.week.to_i), class: "btn btn-primary chart-control" %>
+      <%= link_to_change_chart "this month", chart_options, @chartkick_chart_id, device_sensor_readings_path(device, attribute: :carbon_monoxide, end_time: chart_end_time, range: 1.month.to_i), class: "btn btn-primary chart-control" %>
+      <%= link_to_change_chart "this year", chart_options, @chartkick_chart_id, device_sensor_readings_path(device, attribute: :carbon_monoxide, end_time: chart_end_time, range: 1.year.to_i), class: "btn btn-primary chart-control" %>
+      </div>
+    </div>
   </div>
 </div>

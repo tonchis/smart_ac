@@ -1,15 +1,63 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>SmartAc</title>
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
 
-    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
-    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
-  </head>
+<head>
+  <title>SmartAc</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
 
-  <body>
-    <%= yield %>
-  </body>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
+
+<body class="nav-md">
+  <div class="container body">
+    <div class="col-md-3 left_col">
+      <div class="left_col scroll-view">
+        <div class="navbar nav_title" style="border: 0;">
+          <%= link_to devices_path, class: "site_title" do %>
+            <i class="fas fa-fan"></i>
+            <span>Smart AC</span>
+          <% end %>
+          <div class="divider" style="width: 100%;"></div>
+
+        </div>
+      </div>
+    </div>
+    <div class="top_nav">
+      <div class="nav_menu">
+        <div class="nav toggle">
+          <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+        </div>
+        <nav class="nav navbar-nav mt-3">
+          <ul class="navbar-right">
+            <li class="d-flex mr-4">
+              <div class="top-avatar-ctn mr-2">
+                <%= image_tag("avatar.png", alt: "avatar", class: "top-avatar") %>
+              </div>
+              <div>
+                Admin User
+              </div>
+              
+            </li>
+
+
+          </ul>
+        </nav>
+      </div>
+    </div>
+    <div class="right_col" role="main" style="min-height: 1000px;">
+      <%= yield %>
+    </div>
+  </div>
+
+  <footer>
+    <div class="pull-right">
+      Thanks to the Gentelella - Bootstrap Admin Template
+    </div>
+    <div class="clearfix"></div>
+  </footer>
+</body>
+
 </html>

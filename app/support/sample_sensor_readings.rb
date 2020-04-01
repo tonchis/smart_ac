@@ -29,7 +29,7 @@ module SampleSensorReadings
         0.03,
         20.0,
         45.0,
-        25.0,ß
+        25.0,
         duration
       )
 

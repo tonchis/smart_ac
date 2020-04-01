@@ -1,23 +1,19 @@
+# An individual time reading
 class Reading < ApplicationRecord
-  ALERT_HEALTH_STATUSES = [
-    :gas_leak,
-    :needs_new_filter,
-    :needs_service
-  ]
-
   belongs_to :sensor
 
   after_create :add_alerts_if_required
 
   private
 
+  # Should be changed with better alert mechanism
   def add_alerts_if_required
     alerts = []
-    if ALERT_HEALTH_STATUSES.include?(health_status.to_s.to_sym)
+    if Alert.status_alerts.include?(health_status.to_s.to_sym)
       alerts << health_status.to_s.to_sym
     end
 
-    if carbon_monoxide && carbon_monoxide > 9
+    if carbon_monoxide && carbon_monoxide > Alert.safe_carbon_monoxide
       alerts << :carbon_monoxide_high
     end
 

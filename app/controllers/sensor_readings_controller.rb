@@ -1,3 +1,7 @@
+# The controller that provides the data to be displayed
+# in the charts.
+#
+# Expects the parameters range, end_time, attribute and device_id
 class SensorReadingsController < ApplicationController
 
   def show
@@ -23,9 +27,15 @@ class SensorReadingsController < ApplicationController
     @device ||= Device.find(params[:device_id])
   end
 
+  # Class to display the data based on the sensor type
+  # and attributes from the parameters.
   class SensorReadingDisplay
     attr_reader :sensor_scope, :range, :end_time, :attribute
 
+    # sensor_scope is the collection. e.g. device.sensors
+    # attribute is the attribute to be measure (e.g. :temperature)
+    # end_time should be a unix time stamp integer
+    # range should be the number of seconds to display
     def initialize(sensor_scope, attribute, end_time, range)
       @sensor_scope = sensor_scope
       @attribute = attribute.to_sym
@@ -37,11 +47,14 @@ class SensorReadingsController < ApplicationController
       sensor_scope.map do |sensor|
         {
           name: ["Sensor", sensor.sensor_number].join(" "), 
-          data: sensor.readings.where(recorded_at_scope).group_by_period(time_bucket, :recorded_at).average(attribute)
+          data: sensor.readings.where(recorded_at_scope)
+            .group_by_period(time_bucket, :recorded_at)
+            .average(attribute)
         }
       end
     end
 
+    # to_json is called by the json renderer
     def to_json(context=nil)
       to_h.to_json(context)
     end
@@ -54,11 +67,12 @@ class SensorReadingsController < ApplicationController
       end_time - range
     end
 
+    # Base the time averaging bucket on the range
     def time_bucket
       case
-      when range <= 4.hours then
+      when range <= 4.hours
         :minute
-      when range <= 3.days then
+      when range <= 3.days
         :hour
       else
         :day

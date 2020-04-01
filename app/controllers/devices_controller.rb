@@ -21,6 +21,9 @@ class DevicesController < ApplicationController
     device.alerts.active
   end
 
+  #  The current end time is just the last reading time 
+  #  This is purely to make demos easier. It should be converted
+  #  to a parameter based time.
   def chart_end_time
     @chart_end_time ||= device.readings.order(:recorded_at).last.try(:recorded_at).to_i
   end

@@ -1,24 +1,27 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## Deployment & Configuration
+The environment variables 
 
-Things you may want to cover:
+API_ACCESS_KEY
+ADMIN_USER
+ADMIN_PASSWORD
 
-* Ruby version
+have to be defined
 
-* System dependencies
+## Test Data
+You can generate a years worth of sensor data with `rake db:seed`
 
-* Configuration
+## Tests
+`bin/rails test`
 
-* Database creation
+## Major To-Dos
+Sidekiq isn't actually enabled yet. The sidekiq worker in the api controller needs to be converted 
+to async.
 
-* Database initialization
+## API access
+DATA="{\"data\":{\"device\":{\"serial_number\":\"FAK-1122-334455\",\"firmware_version\":\"0.0.2\",\"registration_date\":\"2018-1-1\"},\"humidity\":\"98.9\",\"temperature\":20.1234,\"carbon_monoxide\":8,\"health_status\":\"gas_leak\",\"recorded_at\":\"2020-04-01T12:24:57-04:00\",\"sensor_number\":\"42\"}}"
 
-* How to run the test suite
+TOKEN="ABCDEFGH"
 
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+curl -XPOST localhost:3000/api/data_reports --data $DATA -H "Content-Type: application/json" -H "Authorization: Token token=\"$TOKEN\""

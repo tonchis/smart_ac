@@ -1,3 +1,4 @@
+# A sensor record
 class Sensor < ApplicationRecord
   belongs_to :device
   has_many :readings

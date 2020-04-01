@@ -1,3 +1,10 @@
+# Provides the endpoint for uploading data
+#
+# The Header 'AUTHORIZATION' needs to be set
+# This can be done in rails with: ActionController::HttpAuthentication::Token.encode_credentials("ABCDEFGH")
+#
+# This should be  "Token token=\"ABCDEFGH\""
+#
 class Api::DataReportsController < Api::ApplicationController
   rescue_from ActionController::ParameterMissing do |exception|
     render json: {errors: [exception.message]}, status: :unprocessable_entity
@@ -25,9 +32,17 @@ class Api::DataReportsController < Api::ApplicationController
   end
 
   def permitted_data
-    {data: [:humidity, :temperature, :carbon_monoxide, :health_status, :recorded_at, :sensor_number, {device: [:serial_number, :registration_date, :firmware_version]}]}
+    {
+      data: [
+        :humidity, :temperature, :carbon_monoxide, :health_status, 
+        :recorded_at, :sensor_number, {
+          device: [:serial_number, :registration_date, :firmware_version]
+        }
+      ]
+    }
   end
 
+  # The inline worker to migrate the data report
   def report_worker
     @report_worker ||= DataReportWorker.new
   end

@@ -16,4 +16,6 @@ Rails.application.routes.draw do
   resources :devices, only: [:show, :index] do
     resource :sensor_readings, only: :show
   end
+
+  root to: redirect("/devices")
 end

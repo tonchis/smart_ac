@@ -58,7 +58,7 @@ class DataReportWorker
   end
 
   def reading_data_for(data)
-    data.slice("temperature", "humidity", "carbon_monoxide", "health_status")
+    data.slice("temperature", "humidity", "carbon_monoxide", "health_status", "recorded_at")
   end
 
   def get_sensor_by_serial_number_and_sensor_number(data, device, sensor_number, serial_number)

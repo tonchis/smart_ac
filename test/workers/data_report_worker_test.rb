@@ -6,6 +6,8 @@ class DataReportWorkerTest < ActiveSupport::TestCase
   end
 
   test "it builds new data from a single sensor measurement" do
+    time = Time.now 
+
     data = {
       device: {
         serial_number: "AB123456",
@@ -15,8 +17,9 @@ class DataReportWorkerTest < ActiveSupport::TestCase
       humidity: "98.9",
       temperature: 20.1234,
       carbon_monoxide: 8,
+      humidity: 93.1,
       health_status: "all_good",
-      recorded_at: Time.now.to_s,
+      recorded_at: time.to_s,
       sensor_number: "42"
     }
 
@@ -33,10 +36,17 @@ class DataReportWorkerTest < ActiveSupport::TestCase
     assert reading.sensor.device.persisted?
 
     assert reading.health_status == data[:health_status]
+    assert reading.recorded_at.present?
+    assert_in_delta reading.recorded_at, time, 1.second
+    assert_in_delta reading.temperature, 20.1234, 0.001
+    assert_in_delta reading.humidity, 93, 1.0
+    assert reading.carbon_monoxide == 8
+
     assert reading.sensor.sensor_number == data[:sensor_number]
     assert reading.sensor.device.serial_number == data.dig(:device, :serial_number)
     assert reading.sensor.device.firmware_version == data.dig(:device, :firmware_version)
     assert reading.sensor.device.registration_date == data.dig(:device, :registration_date)
+    assert reading.health_status == data[:health_status]
 
   end
 
